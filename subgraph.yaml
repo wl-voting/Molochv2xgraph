@@ -1,27 +1,25 @@
 specVersion: 0.0.2
-description: Gravatar for Ethereum
-repository: https://github.com/graphprotocol/example-subgraph
+description: Moloch V2x
+repository: https://github.com/x5engine/git remote add origin git@github.com:x5engine/Molochv2xgraph.git
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Gravity
-    network: mainnet
+    name: MysticMolochSummoner
+    network: rinkeby
     source:
-      address: '0x2E645469f354BB4F5c8a05B3b30A929361cf77eC'
-      abi: Gravity
+      address: '0x8bd70dA40aDe30662c9cf492A4EbAA7e1a65Df44'
+      abi: MysticMolochSummoner
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
       language: wasm/assemblyscript
       entities:
-        - Gravatar
+        - Moloch
       abis:
-        - name: Gravity
-          file: ./abis/Gravity.json
+        - name: MysticMolochSummoner
+          file: ./abis/MysticMolochSummoner.json
       eventHandlers:
-        - event: NewGravatar(uint256,address,string,string)
-          handler: handleNewGravatar
-        - event: UpdatedGravatar(uint256,address,string,string)
-          handler: handleUpdatedGravatar
+        - event: SummonMoloch(address, address, address, address[], uint256[], uint256, uint256, uint256, uint256, uint256, uint256, uint256, uint256 )
+          handler: handleNewMoloch
       file: ./src/mapping.ts

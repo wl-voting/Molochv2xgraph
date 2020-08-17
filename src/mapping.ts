@@ -1,22 +1,18 @@
-import { NewGravatar, UpdatedGravatar } from '../generated/Gravity/Gravity'
-import { Gravatar } from '../generated/schema'
+import { SummonMoloch } from '../generated/MysticMolochSummoner/MysticMolochSummoner'
+import { Moloch } from '../generated/schema'
 
-export function handleNewGravatar(event: NewGravatar): void {
-  let gravatar = new Gravatar(event.params.id.toHex())
-  gravatar.owner = event.params.owner
-  gravatar.displayName = event.params.displayName
-  gravatar.imageUrl = event.params.imageUrl
-  gravatar.save()
-}
-
-export function handleUpdatedGravatar(event: UpdatedGravatar): void {
-  let id = event.params.id.toHex()
-  let gravatar = Gravatar.load(id)
-  if (gravatar == null) {
-    gravatar = new Gravatar(id)
-  }
-  gravatar.owner = event.params.owner
-  gravatar.displayName = event.params.displayName
-  gravatar.imageUrl = event.params.imageUrl
-  gravatar.save()
+export function handleNewMoloch(event: SummonMoloch): void {
+  let moloch = new Moloch(event.params.id.toHex())
+  moloch.depositToken = event.params._depositToken
+  moloch.voteToken = event.params._voteToken
+  moloch.summoner = event.params._summoner
+  moloch.summonerShares = event.params._summonerShares
+  moloch.summonerDeposit = event.params._summonerDeposit
+  moloch.proposalDeposit = event.params._proposalDeposit
+  moloch.processingReward = event.params._processingReward
+  moloch.periodDuration = event.params._periodDuration
+  moloch.votingPeriodLength = event.params._votingPeriodLength
+  moloch.gracePeriodLength = event.params._gracePeriodLength
+  moloch.dilutionBound = event.params._dilutionBound
+  moloch.save()
 }

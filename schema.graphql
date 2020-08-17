@@ -1,6 +1,122 @@
-type Gravatar @entity {
+type Moloch @entity{
   id: ID!
-  owner: Bytes!
-  displayName: String!
-  imageUrl: String!
+  depositToken: Token!
+  voteToken: Token!
+  summoner: [Member!]!
+  summonerShares: [Int!]!
+  summonerDeposit: BigInt
+  proposalDeposit: BigInt!
+  processingReward: BigInt!
+  periodDuration: BigInt!
+  votingPeriodLength: BigInt!
+  gracePeriodLength: BigInt!
+  dilutionBound: BigInt!
+}
+
+type Member @entity{
+  id: ID!
+  createdAt: String!
+  moloch: Moloch!
+  molochAddress: Bytes!
+  memberAddress: Bytes!
+  delegateKey: Bytes!
+  shares: BigInt!
+  loot: BigInt
+  exists: Boolean!
+  highestIndexYesVote: Proposal
+  tokenTribute: BigInt
+  didRagequit: Boolean!
+  isSummoner: Boolean!
+  votes: [Vote!]
+  submissions: [Proposal!]
+  tokenBalances: [TokenBalance!]
+  rageQuits: [RageQuit!]
+  proposedToKick: Boolean
+  kicked: Boolean
+  jailed: Proposal
+}
+
+type Token @entity{
+  id: ID!
+  moloch: Moloch!
+  tokenAddress: Bytes!
+  whitelisted: Boolean!
+  approved: Proposal
+  symbol: String
+  decimals: BigInt
+}
+
+type Vote @entity{
+  id: ID!
+  createdAt: String!
+  proposal: Proposal!
+  member: Member!
+  uintVote: Int!
+  molochAddress: Bytes!
+  memberAddress: Bytes
+}
+
+type Proposal @entity{
+  id: ID!
+  createdAt: String!
+  proposalIndex: BigInt
+  proposalId: BigInt!
+  moloch: Moloch!
+  molochAddress: Bytes!
+  member: Member!
+  memberAddress: Bytes!
+  delegateKey: Bytes!
+  applicant: Bytes!
+  proposer: Bytes
+  sponsor: Bytes!
+  sharesRequested: BigInt!
+  lootRequested: BigInt!
+  tributeOffered: BigInt!
+  tributeToken: Bytes!
+  paymentRequested: BigInt!
+  paymentToken: Bytes!
+  startingPeriod: BigInt
+  yesVotes: BigInt!
+  noVotes: BigInt!
+  sponsored: Int!
+  sponsoredAt: String
+  processed: Int!
+  didPass: Int!
+  cancelled: Int
+  aborted: Int
+  whitelist: Int
+  guildkick: Int
+  newMember: Boolean
+  trade: Boolean
+  details: Bytes!
+  actionData: Bytes
+  maxTotalSharesAndLootAtYesVote: BigInt
+  votes: [Vote!]
+  yesShares: BigInt!
+  noShares: BigInt!
+  votingPeriodStarts: BigInt!
+  votingPeriodEnds: BigInt!
+  gracePeriodEnds: BigInt!
+}
+
+type TokenBalance @entity{
+  id: ID!
+  moloch: Moloch!
+  token: Token!
+  tokenBalance: BigInt!
+  member: Member
+  guildBank: Boolean!
+  ecrowBank: Boolean!
+  memberBank: Boolean!
+}
+
+type RageQuit @entity{
+  id: ID!
+  createdAt: String!
+  moloch: Moloch!
+  molochAddress: Bytes!
+  member: Member!
+  memberAddress: Bytes!
+  shares: BigInt!
+  loot: BigInt!
 }
